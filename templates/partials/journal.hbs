@@ -1,0 +1,74 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+      <link rel="stylesheet" href="/css/monitor.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>journal</title>
+
+</head>
+<body class="monitor_body">
+          {{>nav_drip}}
+
+    <div class="monitor_maincontainer">
+        <header class="monitor_header">Drip Control and monitoring</header>
+          <form class="journal_container"action="/journal" method="post" onsubmit="convertCooldown()">
+            <div>
+              <label for="input1">Input 1:</label>
+              <input class="journal_input" type="text" id="input1" placeholder="Enter text" name="input1">
+            </div>
+
+            <div>
+              <label for="input2">Input 2:</label>
+              <input class="journal_input"type="text" id="input2" placeholder="Enter text" name="input2">
+            </div>
+
+
+            <button type="submit" id="startCountdownBtn">save</button>
+          </form>
+  
+  
+
+  <script src="index.js"></script>
+
+        
+
+           
+    </div>
+        
+
+
+</body>
+  <script>
+    function setCooldown(days, hours, minutes, seconds) {
+      // Assign the value to hidden input fields
+      document.getElementById('days').value = days;
+      document.getElementById('hours').value = hours;
+      document.getElementById('minutes').value = minutes;
+      document.getElementById('seconds').value = seconds;
+
+      // Display the selected cooldown
+      const selectedCooldownElement = document.getElementById('selectedCooldown');
+      selectedCooldownElement.textContent = `Selected Cooldown: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    }
+
+    function convertCooldown() {
+      // Convert days, hours, minutes to seconds
+      const days = parseInt(document.getElementById('days').value) || 0;
+      const hours = parseInt(document.getElementById('hours').value) || 0;
+      const minutes = parseInt(document.getElementById('minutes').value) || 0;
+      const seconds = parseInt(document.getElementById('seconds').value) || 0;
+      
+      // Calculate total seconds
+      const totalSeconds = days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds;
+      
+      // Update the hidden input field
+      document.getElementById('seconds').value = totalSeconds;
+    }
+  </script>
+
+
+
+
+</html>

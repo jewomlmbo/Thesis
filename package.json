@@ -1,0 +1,35 @@
+{
+  "name": "thesis_web",
+  "version": "1.0.0",
+  "description": "this project is for the development of web for our thesis",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ph",
+    "temperature",
+    "moisture",
+    "soil",
+    "water",
+    "drip",
+    "sprinkler"
+  ],
+  "author": "Jerome A. Lumbo",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "handlebars-layouts": "^3.1.4",
+    "hbs": "^4.2.0",
+    "moment": "^2.29.4",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.0",
+    "pdfkit": "^0.14.0",
+    "php-express": "^0.0.3",
+    "php-server": "^1.0.0",
+    "socket.io": "^4.7.3"
+  }
+}

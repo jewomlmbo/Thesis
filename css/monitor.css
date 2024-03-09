@@ -1,0 +1,441 @@
+/*-------------------control--------------------------------*/
+.monitor_body .control_container{
+    width:100%;
+    background:url('../images/bg7.jpg');
+    background-size: cover;
+    background-image: linear-gradient(to right top, #0f3705, #2d740c, #547e15, #acc50e);
+    margin: auto;
+
+    margin-bottom: 15px;
+    height: 25vh;
+}
+#sliderValue2 {
+    display: none;
+}
+#sliderValue1 {
+    display: none;
+}
+
+.control_container .drip_control{
+    display: flex;
+    width:fit-content;
+    height: fit-content;
+    background-color: #ff000000;
+    margin: auto;
+
+    
+}
+.control_container .control_status{
+    color: #000000;
+    margin-left: 50px;
+}
+.control_container .control_status ul{
+    padding: 10px 0 10px 0;
+}
+#sprinkler_solenoidstatus, #drip_solenoidstatus{
+    font-size: 30px;  
+    font-weight: 600;
+    color: #006f04;
+    margin-left: 30px;
+   
+}
+#sprinkler_solenoidtimestamp,#drip_solenoidtimestamp{
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.switch-container {
+    align-items: center;
+    height: 100px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 15px;
+    display: flex;
+    padding: 0 30px 0 30px;
+
+
+
+}
+.switch-container p{
+   margin-right: 30px;
+   color: rgb(0, 0, 0);
+   
+}
+/*.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #000000;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+*/
+
+.solenoid_switch {
+    width: 60px;
+    margin-top: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 33px; /* Adjust the height as needed */
+    background: #ececec;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out, background 0.2s ease-in-out;
+    border-radius: 15px;
+  }
+
+  .solenoid_switch:hover {
+    opacity: 1;
+  }
+  .solenoid_switch:disabled {
+   
+    background: #d0d0d0; /* Adjust the background color for the disabled state */
+  }
+  .solenoid_switch::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    background: #095f0d;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .solenoid_switch:hover::-webkit-slider-thumb {
+    background: #45a049;
+  }
+  .solenoid_switch:disabled::-webkit-slider-thumb {
+    background: #777777; /* Adjust the background color for the disabled thumb */
+  }
+  
+
+  .solenoid_switch::-moz-range-thumb {
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .solenoid_switch:hover::-moz-range-thumb {
+    background: #45a049;
+  }
+
+
+.solenoid_switch{
+
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.switch_label,.graph_label{  
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #000000;
+}
+.switch_label{
+    text-align: center;
+}
+
+.switch_content{
+    margin: auto;
+
+    width: fit-content;
+}
+
+
+/*containers-------------------------------------*/
+.monitor_body{
+    font-family: "Arial Narrow", sans-serif;
+    min-height: 100vh;
+   
+    background:url('../images/white_textured.jpg');
+    background: #adadad;
+    background-size: cover;
+    height:100%;
+    width: 100%;
+    background-attachment: fixed;
+    overflow-y: auto;
+    padding-top: 60px;
+}
+
+
+.monitor_maincontainer {
+    width: 100%;  
+    height: fit-content;
+
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(10px);
+    
+
+   padding:0 10px 0 55px
+
+
+}
+
+/*-------------------left container--------------------------------*/
+
+/*-------------------monitor container--------------------------------*/
+.monitor_header{
+
+    font-size: 23px;
+  font-weight: 600;
+    padding:5px 0 5px 10px;
+    height: 40px;
+    color: #000000;
+    background-color: #ffffff;
+    letter-spacing: 2px;
+    
+
+}
+.display_values_main{
+    background: #00000000;
+    display: flex;
+    margin-bottom: 15px;
+
+}
+.display_values_container1{
+    width: 30%;
+    background-color: #ffffff;
+    border-radius: 5px;
+
+}
+.sensor_data input {
+    padding: 8px; /* Add padding to the inputs */
+    margin-bottom: 8px; /* Add margin between inputs */
+}
+.display_values_container2{
+    margin-left: 15px;
+    width: 70%;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+.display_values_container2 .monitor_sensor:nth-child(odd) {
+    background-color: #fefefe13; /* Add your desired background color for odd elements */
+}
+
+.display_values_container2 .monitor_sensor:nth-child(even) {
+    background-color: transparent; /* Add your desired background color for even elements or leave transparent */
+}
+.monitor_sensor {
+    margin: auto;
+    margin-bottom: 15px;
+}
+.display_values2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+   
+}
+
+.monitor_mainlabel{
+    color: #000000;
+ 
+   font-size: 15px;
+   background-color: #dc0a0a00;
+   width:fit-content;
+    font-weight: 800;
+    padding: 10px 0 30px 30px;
+    display: flex;
+
+
+   
+}
+
+.sensor_data1,.sensor_data2,.sensor_data3,.sensor_data4,.sensor_data5,.sensor_data6{
+   margin-bottom: 10px;
+    color: #000000;
+    align-items: center;
+    overflow: hidden; 
+    justify-content: space-between;
+
+    margin-left: 30px;
+    height: 100px;
+    max-width: 300px;
+    padding: 10px;
+    background:#ffffff ;
+    border-radius: 5px;
+
+    
+}
+.sensor_date{
+    width: fit-content;
+
+}
+.monitor_sensor .display_values1 .sensor_data1{
+    border-left: 20px groove #5a57ff;
+    border-bottom: 5px solid #5a57ff;
+    
+    
+}
+.monitor_sensor .display_values1 .sensor_data2{
+    border-left: 20px groove #e94949;
+    border-bottom: 5px solid #e94949;
+    
+}
+.monitor_sensor .display_values2 .sensor_data3{
+    border-left: 20px groove #5df06e;
+    border-bottom: 5px solid #5df06e;
+
+}
+.monitor_sensor .display_values2 .sensor_data4{
+    border-left: 20px groove #c6da2e;
+    border-bottom: 5px solid #c6da2e;
+}
+.monitor_sensor .display_values2 .sensor_data5{
+    border-left: 20px groove #da2e8a;
+    border-bottom: 5px solid #da2e8a;
+}
+
+.monitor_sensor .display_values2 .sensor_data6{
+    border-left: 20px groove #2ed7da;
+    border-bottom: 5px solid #2ed7da;
+}
+
+
+
+.monitor_sensor .display_values1 span {
+    color: rgb(0, 0, 0);
+     text-align: right;
+     float: right;
+    font-size: 45px;
+    font-weight: 600;
+    margin-right: 20px;
+ } 
+.monitor_sensor .display_values2 span {
+
+    text-align: right;
+    float: right;
+   font-size: 45px;
+   font-weight: 600;
+   margin-right: 20px;
+}
+.wet_moisture{
+    color: #00702f;
+}
+.dry_moisture{
+    color: #c10101;
+}
+.black{
+    color: #000000;
+}
+
+
+.fullscreen_btn{
+    width: fit-content;
+ 
+   float: right;
+}
+.fullscreen_btn button{
+    width:30px ;
+    height: 30px;
+    font-size: 15px;
+    background: transparent;
+    border: solid 1px #343434;
+    color:#ffffff;
+}
+.fullscreen_btn button:hover{
+    font-size: 20px;
+
+    background: #515151;
+
+}
+
+.selected_date_display{
+    color: white;
+}
+.selectdate_label{
+    color: #fff;
+}
+
+.graph_container{
+    display: flex;
+    background: #ff000000;
+
+
+}
+
+.graph1{
+    width: 40%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+.graph2{
+    width: 60%;
+    background-color: #ffffff;
+    margin-left: 15px;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+
+#drip_timestamp1,#drip_timestamp2, #sprinkler_timestamp{
+    font-size: 20px;
+    font-weight: 700;
+    color: #044f0d;
+    margin-left: 40px;
+}
+/*****************************JOurnal**********************************/
+
+.journal_container{
+    background: #ffffff;
+    margin-top: 15px;
+    min-height: 84vh;
+    color: #000000;
+    padding-left: 350px;
+    padding-top: 30px;
+}
+
+.journal_input{
+    width: 600px;
+    height: 200px;
+}

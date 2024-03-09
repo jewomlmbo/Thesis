@@ -1,0 +1,107 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Graph</title>
+    <link rel="stylesheet" type="text/css" href="/css/graph.css">
+    <link rel="stylesheet" href="/css/monitor.css">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+     <script src="/src/graph.js"></script>
+
+</head>
+
+<body class="monitor_drip_body">
+
+
+    <div class="left_header_container">
+        <p>DRIP SYSTEM <ul>MONITORING</ul> </p>
+        <div class="harvestday_text">Harvest Day</span></div>
+        <div class="header_buttons">
+            <a href="monitor_drip">
+                <button>values</button></a>
+            <a href="home">
+                <button>exit</button></a>
+</div>
+    </div>
+
+    <div class="monitor_drip_maincontainer">
+        <div class="drip_monitor_container1">
+        <header class="drip_monitor_header1">SWITCHES</header>
+        <div class="switch-container">
+            <p>Valve 1 </p>
+                <label class="switch">
+                    <input type="checkbox" id="variableSwitch">
+                    <span class="slider"></span>
+                </label>
+                
+            </div>
+
+            <div class="switch-container">
+            <p>Valve 2 </p>
+                <label class="switch">
+                    <input type="checkbox" id="variableSwitch">
+                    <span class="slider"></span>
+                </label>
+            
+            </div>
+
+            <div class="switch-container">
+            <p>Valve 3 </p>
+                <label class="switch">
+                    <input type="checkbox" id="variableSwitch">
+                    <span class="slider"></span>
+                </label>
+            
+           
+            </div>
+        <script src="monitor_switch.js"></script>
+        </div>
+   
+        <div class="drip_monitor_container2">
+        <header class="drip_monitor_header2">READINGS</header>
+            <div>
+                <canvas id="temperatureHumidityChart" width="400" height="200"></canvas>
+            </div>
+                
+        </div>
+        
+    </div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

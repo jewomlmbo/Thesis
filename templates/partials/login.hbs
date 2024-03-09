@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="/css/login.css">
+
+	<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"  crossorigin="anonymous"></script>
+ 
+
+<body class="body_login">
+
+	<div class= "slideshow">
+		 {{>slideshow}}
+	</div>
+
+		<div class="wrapper_login">
+			<div class="title_login">
+				<div class="login_filter">
+					<div class="thesis_title">
+						Comparative study of peanut production using IOT drip system and sprinkler system
+					</div>
+					<div class="sign_in">
+						Don't have an account?
+							<a href="/signup">click here!</a>
+					</div>
+				</div>
+				
+			</div>
+			<div class="box">
+				<h3>Login</h3>
+				<form action="/login" 
+					method="POST">
+
+					<div class="input_box">
+						<input type="text"
+							name="username" 
+							autocomplete="off"
+							required>
+							<label>Email</label>
+					</div>
+					
+					<div class="input_box">
+						<input type="password"
+							name="password"
+							autocomplete="off"
+							required>
+							<label>Password</label>
+					</div>
+
+					<div class="remember_forgot">
+						<label><input type="checkbox">remember me</label>
+						<a href="contact.php">Forgot password?</a>
+
+					</div>
+
+					<button class="login_btn"
+						type="submit" 
+						name="login" 
+						id="login"
+						>Log in
+					</button>
+
+				
+
+				</div>
+				
+			</div>
+		</div>
+		
+	
+</body>
+
+
+</html>
