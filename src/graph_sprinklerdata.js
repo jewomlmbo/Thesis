@@ -57,6 +57,11 @@ function updateChart(sprinkler_soilmoisture1, sprinkler_soilmoisture2, sprinkler
             },
             options: {
                 scales: {
+                    x: {
+                        ticks: {
+                            display: false // Hide the labels on x-axis
+                        }
+                    },
                     y: {
                         beginAtZero: false,
                     }
