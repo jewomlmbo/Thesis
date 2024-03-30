@@ -1,6 +1,6 @@
 var airGraph;
 var soilMoistureGraph;
-var pointRadius = 1; // Set the point radius value here
+var pointRadius = 2; // Set the point radius value here
 
 // Define border colors
 var temperatureBorderColor = '#5a57ff';
@@ -41,6 +41,11 @@ function updateAirChart(air_temperature, air_humidity) {
             },
             options: {
                 scales: {
+                    x: {
+                        ticks: {
+                            display: false
+                        }
+                    },
                     y: {
                         beginAtZero: false,
                     }
@@ -107,6 +112,11 @@ function updateSoilMoistureChart(drip_soilmoisture1, drip_soilmoisture2, drip_so
             },
             options: {
                 scales: {
+                    x: {
+                        ticks: {
+                            display: false // Hide the labels on x-axis
+                        }
+                    },
                     y: {
                         beginAtZero: false,
                     }
