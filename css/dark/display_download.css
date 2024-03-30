@@ -1,0 +1,42 @@
+.selected_date_display_values{
+    display: flex;
+
+}
+.selectdate_label{
+    font-size: 20px;
+}
+.input_date, .date_button{
+    background: #1deb99;
+    height: 30px;
+    border: none;
+}
+
+.date_download_buttons{
+    display: flex;
+}
+.selected_date_display_values{
+    color: #fff;
+}
+.selected_date_display_values table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px; /* Adjust as needed */
+}
+.selected_date_display_values th {
+    background-color: #000000; /* Light gray background */
+    padding: 8px;
+    text-align: left;
+}
+
+.selected_date_display_values td {
+    padding: 8px;
+    text-align: left;
+}
+
+#displayData p {
+    margin-top: 10px; /* Adjust as needed */
+}
+
+tr:nth-child(even) {
+    background-color: #0000005b; /* Even row color */
+}

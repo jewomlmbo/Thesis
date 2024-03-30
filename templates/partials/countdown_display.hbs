@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+    #countdown {
+      font-size: 2em;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown Timer</h1>
+  <div id="countdown">Calculating...</div>
+
+  <p>Last Expected Finish Date: {{ lastExpectedDate }}</p>
+  <label for="newDate">Enter new expected finish date:</label>
+  <input type="datetime-local" id="newDate">
+  <button onclick="updateCountdownDate()">Update Date</button>
+
+  <script src="/src/countdown.js"></script>
+  <script>
+    // Define lastExpectedDate globally
+    let lastExpectedDate = new Date("{{ lastExpectedDate }}");
+
+    // Initial update
+    updateCountdown();
+  </script>
+</body>
+</html>

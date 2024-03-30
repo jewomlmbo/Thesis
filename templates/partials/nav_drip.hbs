@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="/css/drip_nav.css">
+    <title>Document</title>
+
+</head>
+<body>
+    <ul class="nav-links" id="navLinks">
+        <li class="center">
+            <a class="link" id="toggleNav">
+                <div class="icon"><i class="fas fa-bars"></i></div>
+                <div class="text">Menu</div>
+            </a>
+        </li>
+
+        <li class="center">
+            <a href="monitor_drip" class="link">
+                <div class="icon"><i class="fas fa-desktop"></i></div>
+                <div class="text">Monitor</div>
+            </a>
+        </li>
+
+        <li class="center">
+            <a href="journal" class="link">
+                <div class="icon"><i class="fas fa-book"></i></div>
+                <div class="text">Journal</div>
+            </a>
+        </li>
+
+        <li class="center">
+            <a href="countdown" class="link">
+                <div class="icon"><i class="fas fa-clock"></i></div>
+                <div class="text">Countdown</div>
+            </a>
+        </li>
+
+        <li class="center">
+            <a href="drip_selectdate" class="link">
+                <div class="icon"><i class="fas fa-download"> </i></div>
+                <div class="text">Display/download</div>
+            </a>
+        </li>
+    </ul>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.getElementById('toggleNav').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('expanded');
+        });
+    </script>
+</body>
+</html>
