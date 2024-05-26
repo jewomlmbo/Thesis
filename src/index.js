@@ -497,7 +497,7 @@ app.get('/countdown', async (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////
 // Additional routes
 
-const additionalRoutes = ['/settings','/countdown','/countdown_display','/monitor_drip', '/graph_monitor_drip','/monitor_sprinkler' ,'/graph_monitor_sprinkler','/graph_drip_full','/home', '/login','/drip_selectdate','/sprinkler_selectdate','/download','/journal'];
+const additionalRoutes = ['/about_us','/settings','/countdown','/countdown_display','/monitor_drip', '/graph_monitor_drip','/monitor_sprinkler' ,'/graph_monitor_sprinkler','/graph_drip_full','/home', '/login','/drip_selectdate','/sprinkler_selectdate','/download','/journal'];
 additionalRoutes.forEach(route => {
     // Render additional pages based on the route
     app.get(route, (req, res) => renderTemplate(res, `partials/${route.substring(1)}`));
