@@ -1,0 +1,158 @@
+/*.nav-links {
+  background-image: linear-gradient(to right top, #0f3705, #2d740c, #157e1e, #20980b);
+  height: 100vh;
+  width: 3%;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;
+  float: left;
+  position: fixed;
+  z-index: 1;
+
+}
+
+.nav-links:hover {
+  width: 175px;
+  transition: none;
+
+}
+.nav-links:hover .link:hover{
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  transition: all 0.5s ease; /* Smooth transition for opacity 
+}
+.link {
+  padding: 30px 0 25px;
+  display: flex;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav-links .icon {
+  display: block;
+
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+.nav-links .text {
+  display: none;
+  opacity: 0;
+
+
+
+
+}
+
+.nav-links:hover .icon {
+  opacity: 1;
+
+}
+
+.nav-links:hover .text {
+  display: block;
+  opacity: 1;
+  margin-left: 5px;
+
+}*/
+
+.nav-links {
+ /* background-image: linear-gradient(to right top, #ffffff, #e3e3e3, #85a087, #e8e8e8);*/
+background: #ffffff;
+  height: 100vh;
+  width: 45px;
+  font-family: 'Poppins', sans-serif;
+  transition: width 0.2s ease; /* Changed transition to only width */
+  float: left;
+  position: fixed;
+  z-index: 1;
+}
+
+.expanded {
+  width: 200px;
+}
+
+.link {
+  padding: 30px 0 25px;
+  display: flex;
+  text-decoration: none;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 500;
+}
+.link:hover{
+  color: rgb(0, 0, 0);
+}
+
+.nav-links .icon {
+  display: block;
+  margin-left: 25%;
+  font-size: 20px;
+}
+
+.nav-links .text {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.expanded .text {
+  display: block;
+  opacity: 1;
+  margin-left: 5px;
+}
+
+.nav-links:hover .icon {
+  opacity: 1;
+}
+
+
+
+#toggleNav {
+  background: #dbdbdb;
+  color: #008e1c;
+  border-bottom: 3px solid #cecece;
+
+
+}
+@media only screen and (max-width: 768px) {
+  .nav-links {
+    /* background-image: linear-gradient(to right top, #ffffff, #e3e3e3, #85a087, #e8e8e8);*/
+   background: #ffffff;
+     height: 100vh;
+     width: 32px;
+     font-family: 'Poppins', sans-serif;
+     transition: width 0.2s ease; /* Changed transition to only width */
+     float: left;
+     position: fixed;
+     z-index: 1;
+   }
+   
+   .expanded {
+     width: 200px;
+   }
+   
+   .link {
+     padding: 30px 0 25px;
+     display: flex;
+     text-decoration: none;
+     color: #333333;
+     font-size: 15px;
+     font-weight: 500;
+   }
+   .link:hover{
+     color: rgb(0, 0, 0);
+   }
+   
+   .nav-links .icon {
+     display: block;
+     margin-left: 20%;
+     font-size: 17px;
+   }
+   
+   
+   
+   
+    
+}
