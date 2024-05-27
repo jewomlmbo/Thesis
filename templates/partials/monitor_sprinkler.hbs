@@ -81,10 +81,10 @@
                         <div class="sensor_date"><div id="sprinkler_timestamp"></div></div>   </header> 
                           <div class="display_values2">
 
-                            <div class="sensor_data3"> <i class="fas fa-bolt"></i> soil sensor 1 <span id="sprinkler_soilmoisture1"><div id="low_warning1"class="low_warning">low moisture</div></span></div>
-                            <div class="sensor_data4"> <i class="fas fa-bolt"></i>soil sensor 2 <span id="sprinkler_soilmoisture2"></span><div id="low_warning1"class="low_warning">low moisture</div></div>
-                            <div class="sensor_data5"> <i class="fas fa-bolt"></i>soil sensor 3 <span id="sprinkler_soilmoisture3"></span><div id="low_warning1"class="low_warning">low moisture</div></div>
-                            <div class="sensor_data6"> <i class="fas fa-bolt"></i>soil sensor 4 <span id="sprinkler_soilmoisture4"></span></div>
+                            <div class="sensor_data3"> <i class="fas fa-bolt"></i>soil sensor 1 <span id="sprinkler_soilmoisture1"></span><div id="low_warning1"class="low_warning">low moisture</div></div>
+                            <div class="sensor_data4"> <i class="fas fa-bolt"></i>soil sensor 2 <span id="sprinkler_soilmoisture2"></span><div id="low_warning2"class="low_warning">low moisture</div></div>
+                            <div class="sensor_data5"> <i class="fas fa-bolt"></i>soil sensor 3 <span id="sprinkler_soilmoisture3"></span><div id="low_warning3"class="low_warning">low moisture</div></div>
+                            <div class="sensor_data6"> <i class="fas fa-bolt"></i>soil sensor 4 <span id="sprinkler_soilmoisture4"></span><div id="low_warning4"class="low_warning">low moisture</div></div>
                         </div>
   
                     </div>
@@ -134,6 +134,7 @@
         for (var i = 1; i <= 4; i++) {
             var soilMoisture = parseInt(document.getElementById("sprinkler_soilmoisture" + i).innerText);
             var element = document.getElementById("sprinkler_soilmoisture" + i);
+              var warningElement = document.getElementById("low_warning" + i);
 
             // Update classes based on current values
            if (soilMoisture <= 50) {
