@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
       <link rel="stylesheet" href="/css/monitor.css">
+              <link rel="stylesheet" href="/css/monitor_mobile.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>journal</title>
 
@@ -12,15 +13,16 @@
           {{>nav_drip}}
 
     <div class="monitor_maincontainer">
-        <header class="monitor_header">Drip Control and monitoring</header>
+       
           <form class="journal_container"action="/journal" method="post" onsubmit="convertCooldown()">
+             <header class="monitor_header">Drip Control and monitoring</header>
             <div>
-              <label for="input1">Input 1:</label>
+              <label for="input1">journal 1:</label>
               <input class="journal_input" type="text" id="input1" placeholder="Enter text" name="input1">
             </div>
 
             <div>
-              <label for="input2">Input 2:</label>
+              <label for="input2">Journal 2:</label>
               <input class="journal_input"type="text" id="input2" placeholder="Enter text" name="input2">
             </div>
 
