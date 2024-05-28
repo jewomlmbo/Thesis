@@ -278,4 +278,34 @@
         -webkit-user-select: none;
         -ms-user-select: none;
     }
+    .journal_container{
+        background: #ffffff;
+        margin-top: 0;
+        min-height: 84vh;
+        color: #000000;
+        padding-left: 0;
+        padding-top: 0;
+    }
+    
+    .journal_input{
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 90%;
+        height:100px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+    }
+    .journal_container label{
+        margin-left: 5%;
+    }
+    .journal_container button{
+        margin-left: 5%;
+        width: 100px;
+        height: 50px;
+        color: #ffffff;
+        background-color: #006f04;
+        border: none;
+        border-radius: 5px;
+    }
+    
 }
