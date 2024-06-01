@@ -111,143 +111,160 @@ app.post('/login', async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////
 //display selected date
 
-app.get('/select_date_drip', async (req, res) => {
+
+app.post('/select_date_drip', async (req, res) => {
     try {
+        const startDate = new Date(req.body.startDate);
+        const endDate = new Date(req.body.endDate);
+
+        // Adjust the date formats for console logging
+        const formattedStartDate = startDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedEndDate = endDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+        // Log start and end dates
+        console.log('Start Date:', formattedStartDate);
+        console.log('End Date:', formattedEndDate);
+
         // Connect to MongoDB
         const client = await MongoClient.connect(mongo_link);
         const db = client.db("Thesis");
         const collection = db.collection("drip_sensor_data");
+
+        // Convert start and end dates to timestamps
+        const startTimestamp = startDate.getTime();
+        const endTimestamp = endDate.getTime();
 
         // Fetch data from MongoDB
         const data = await collection.find().toArray();
 
-        // Close MongoDB connection
-        client.close();
+        // Filter data based on the timestamp range
+        const filteredData = data.filter(item => {
+            const itemTimestamp = new Date(item.timestamp).getTime();
+            return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+        });
 
-        // Render the HTML template with the fetched data
-        res.render('partials/drip_selectdate', { data });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-app.post('/select_date_drip', async (req, res) => {
-    try {
-        const selectedDate = req.body.selectedDate;
-        console.log('Selected Date:', selectedDate);
-
-        // Connect to MongoDB
-        const client = await MongoClient.connect(mongo_link);
-        const db = client.db("Thesis");
-        const collection = db.collection("drip_sensor_data");
-
-        // Convert the selected date to the format used in the database
-        const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
-
-        // Build the regular expression to match the selected date
-        const regex = new RegExp(`^${formattedSelectedDate.replace(/[.,: ]/g, "\\$&")}`);
-
-        // Construct the query to find data for the selected date
-        const query = {
-            timestamp: { $regex: regex }
-        };
-        //console.log('MongoDB Query:', query);
-
-        // Fetch data from MongoDB based on the selected date
-        const data = await collection.find(query).toArray();
-
-        // Log the data to the console
-        //console.log('Data for Selected Date:', data);
+        // Log the fetched data
+        //console.log('Fetched Data:', filteredData);
 
         // Close MongoDB connection
         client.close();
 
         // Render the HTML template with the fetched data
-        res.render('partials/drip_selectdate', { data, selectedData: data, selectedDate });
+        res.render('partials/drip_selectdate', { data: filteredData, selectedData: filteredData });
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 app.post('/download_drip', async (req, res) => {
     try {
-        const selectedDate = req.body.date;
+        const startDate = new Date(req.body.startDate);
+        const endDate = new Date(req.body.endDate);
+
+        // Adjust the date formats for console logging
+        const formattedStartDate = startDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedEndDate = endDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+        // Log start and end dates
+        console.log('Start Date download:', formattedStartDate);
+        console.log('End Date download:', formattedEndDate);
 
         // Connect to MongoDB
         const client = await MongoClient.connect(mongo_link);
         const db = client.db("Thesis");
         const collection = db.collection("drip_sensor_data");
 
-        // Convert the selected date to the format used in the database
-        const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
+        // Convert start and end dates to timestamps
+        const startTimestamp = startDate.getTime();
+        const endTimestamp = endDate.getTime();
 
-        // Build the regular expression to match the selected date
-        const regex = new RegExp(`^${formattedSelectedDate.replace(/[.,: ]/g, "\\$&")}`);
+        // Fetch data from MongoDB
+        const data = await collection.find().toArray();
 
-        // Construct the query to find data for the selected date
-        const query = {
-            timestamp: { $regex: regex }
-        };
+        // Filter data based on the timestamp range
+        const filteredData = data.filter(item => {
+            const itemTimestamp = new Date(item.timestamp).getTime();
+            return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+        });
 
-        // Fetch data from MongoDB based on the selected date
-        const data = await collection.find(query).toArray();
+        // Log the fetched data
+        console.log('Filtered Data:', filteredData);
 
         // Close MongoDB connection
         client.close();
 
-        // Create a PDF document
+        // Create a new PDF document
         const doc = new PDFDocument();
 
-        // Set content type and disposition for the response
+        // Set response headers for the PDF
+        const filename = `DripData_${formattedStartDate}_to_${formattedEndDate}.pdf`;
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=Drip_Data_${formattedSelectedDate}.pdf`);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 
-        // Pipe the PDF directly to the response
+        // Pipe the PDF document directly to the response
         doc.pipe(res);
 
-        // Add a header to the PDF
-        doc.font('Helvetica-Bold').fontSize(24).text(`Drip Irrigation Data for ${formattedSelectedDate}`, {
-            align: 'left'
-        });
-
-        // Reset font settings for regular text
-        doc.font('Helvetica').fontSize(12);
-
-        // Move down to leave space after the header
+        // Add content to the PDF document
+        doc.fontSize(20).text(`Drip Irrigation Data (${formattedStartDate} to ${formattedEndDate})`, { align: 'center' });
         doc.moveDown();
 
-        // Adjust left and right margins
-        const leftMargin = 70;
-        const rightMargin = 550; // Adjust this value for the right margin
+        // Add table header
+       // Add table header
+doc.fontSize(12).font('Helvetica-Bold');
+doc.text('Timestamp', { width: 200, align: 'left' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 1', { width: 375, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 2', { width: 550, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 3', { width: 725, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 4', { width: 900, align: 'center' });
+doc.moveDown(); // Move the cursor down to leave space after the header
 
-        // Add each data item to the PDF
-        data.forEach((item, index) => {
-            // Bold the timestamp text and add small spacing
-            doc.font('Helvetica-Bold').text(`Timestamp: ${item.timestamp}`).moveDown(0.5);
+// Add data rows
+doc.font('Helvetica').fontSize(10);
+filteredData.forEach((data, index) => {
+    // Add data to PDF document, handling undefined values gracefully
+    doc.text(data.timestamp || '', { width: 200, align: 'left' });
+    doc.moveUp(); // Move the cursor up to align with the previous line
+    doc.text(data.field3 ? data.field3.toString() : 'Nan', { width: 375, align: 'center' }); // Map field3 to Sensor 1
+    doc.moveUp(); 
+    doc.text(data.field4 ? data.field4.toString() : 'Nan', {  width: 550, align: 'center'}); // Map field4 to Sensor 2
+    doc.moveUp(); 
+    doc.text(data.field5 ? data.field5.toString() : 'Nan', { width: 725, align: 'center' }); // Map field5 to Sensor 3
+    doc.moveUp(); 
+    doc.text(data.field6 ? data.field6.toString() : 'Nan', {  width: 900, align: 'center'}); // Map field6 to Sensor 4
+    doc.moveDown();
 
-            doc.font('Helvetica').text(`Humidity: ${item.field1}`);
-            doc.font('Helvetica').text(`Temperature: ${item.field2}`);
-            doc.font('Helvetica').text(`Soil MOisture 1: ${item.field3}`);
-            doc.font('Helvetica').text(`Soil Moisture 2: ${item.field4}`);
+    const lineLength = 490; // Adjust the length of the line as needed
+    const startY = doc.y - 10; // Move up slightly to draw the line above the text
+    const endY = startY + 1; // Set the end Y coordinate of the line
+    doc.moveTo(65, startY).lineTo(65 + lineLength, startY).stroke(); // Adjust the starting and ending X coordinates based on your table width
+    
+});
 
-            // Draw a border after each timestamp and its data
-            doc.moveTo(leftMargin, doc.y + 5).lineTo(rightMargin, doc.y + 5).stroke();
 
-            // Move down for the next timestamp
-            if (index < data.length - 1) {
-                doc.moveDown();
-            }
-        });
 
-        // Finalize the PDF
-        doc.end();
+// Finalize the PDF
+doc.end();
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+
+
+
+
+
+
+
 
 
 function formatNumber(value) {
@@ -259,139 +276,154 @@ function formatNumber(value) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 //sprinkler display selected date and download
-app.get('/select_date_sprinkler', async (req, res) => {
+
+
+app.post('/select_date_sprinkler', async (req, res) => {
     try {
+        const startDate = new Date(req.body.startDate);
+        const endDate = new Date(req.body.endDate);
+
+        // Adjust the date formats for console logging
+        const formattedStartDate = startDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedEndDate = endDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+        // Log start and end dates
+        console.log('Start Date:', formattedStartDate);
+        console.log('End Date:', formattedEndDate);
+
         // Connect to MongoDB
         const client = await MongoClient.connect(mongo_link);
         const db = client.db("Thesis");
         const collection = db.collection("sprinkler_sensor_data");
+
+        // Convert start and end dates to timestamps
+        const startTimestamp = startDate.getTime();
+        const endTimestamp = endDate.getTime();
 
         // Fetch data from MongoDB
         const data = await collection.find().toArray();
 
-        // Close MongoDB connection
-        client.close();
+        // Filter data based on the timestamp range
+        const filteredData = data.filter(item => {
+            const itemTimestamp = new Date(item.timestamp).getTime();
+            return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+        });
 
-        // Render the HTML template with the fetched data
-        res.render('partials/sprinkler_selectdate', { data });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-app.post('/select_date_sprinkler', async (req, res) => {
-    try {
-        const selectedDate = req.body.selectedDate;
-        console.log('Selected Date:', selectedDate);
-
-        // Connect to MongoDB
-        const client = await MongoClient.connect(mongo_link);
-        const db = client.db("Thesis");
-        const collection = db.collection("sprinkler_sensor_data");
-
-        // Convert the selected date to the format used in the database
-        const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
-
-        // Build the regular expression to match the selected date
-        const regex = new RegExp(`^${formattedSelectedDate.replace(/[.,: ]/g, "\\$&")}`);
-
-        // Construct the query to find data for the selected date
-        const query = {
-            timestamp: { $regex: regex }
-        };
-        //console.log('MongoDB Query:', query);
-
-        // Fetch data from MongoDB based on the selected date
-        const data = await collection.find(query).toArray();
-
-        // Log the data to the console
-        console.log('Data for Selected Date:', data);
+        // Log the fetched data
+        //console.log('Fetched Data:', filteredData);
 
         // Close MongoDB connection
         client.close();
 
         // Render the HTML template with the fetched data
-        res.render('partials/sprinkler_selectdate', { data, selectedData: data, selectedDate });
+        res.render('partials/sprinkler_selectdate', { data: filteredData, selectedData: filteredData });
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 app.post('/download_sprinkler', async (req, res) => {
     try {
-        const selectedDate = req.body.date;
+        const startDate = new Date(req.body.startDate);
+        const endDate = new Date(req.body.endDate);
+
+        // Adjust the date formats for console logging
+        const formattedStartDate = startDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        const formattedEndDate = endDate.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+        // Log start and end dates
+        console.log('Start Date download:', formattedStartDate);
+        console.log('End Date download:', formattedEndDate);
 
         // Connect to MongoDB
         const client = await MongoClient.connect(mongo_link);
         const db = client.db("Thesis");
         const collection = db.collection("sprinkler_sensor_data");
 
-        // Convert the selected date to the format used in the database
-        const formattedSelectedDate = new Date(selectedDate).toLocaleDateString();
+        // Convert start and end dates to timestamps
+        const startTimestamp = startDate.getTime();
+        const endTimestamp = endDate.getTime();
 
-        // Build the regular expression to match the selected date
-        const regex = new RegExp(`^${formattedSelectedDate.replace(/[.,: ]/g, "\\$&")}`);
+        // Fetch data from MongoDB
+        const data = await collection.find().toArray();
 
-        // Construct the query to find data for the selected date
-        const query = {
-            timestamp: { $regex: regex }
-        };
+        // Filter data based on the timestamp range
+        const filteredData = data.filter(item => {
+            const itemTimestamp = new Date(item.timestamp).getTime();
+            return itemTimestamp >= startTimestamp && itemTimestamp <= endTimestamp;
+        });
 
-        // Fetch data from MongoDB based on the selected date
-        const data = await collection.find(query).toArray();
+        // Log the fetched data
+        console.log('Filtered Data:', filteredData);
 
         // Close MongoDB connection
         client.close();
 
-        // Create a PDF document
+        // Create a new PDF document
         const doc = new PDFDocument();
 
-        // Set content type and disposition for the response
+        // Set response headers for the PDF
+        const filename = `SprinklerData\\\_${formattedStartDate}_to_${formattedEndDate}.pdf`;
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename=sprinkler_Data_${formattedSelectedDate}.pdf`);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 
-        // Pipe the PDF directly to the response
+        // Pipe the PDF document directly to the response
         doc.pipe(res);
 
-        // Add a header to the PDF
-        doc.font('Helvetica-Bold').fontSize(24).text(`Sprinkler Irrigation Data for ${formattedSelectedDate}`, {
-            align: 'left'
-        });
-
-        // Reset font settings for regular text
-        doc.font('Helvetica').fontSize(12);
-
-        // Move down to leave space after the header
+        // Add content to the PDF document
+        doc.fontSize(20).text(`Sprinkler Irrigation Data (${formattedStartDate} to ${formattedEndDate})`, { align: 'center' });
         doc.moveDown();
 
-        // Adjust left and right margins
-        const leftMargin = 70;
-        const rightMargin = 550; // Adjust this value for the right margin
+        // Add table header
+       // Add table header
+doc.fontSize(12).font('Helvetica-Bold');
+doc.text('Timestamp', { width: 200, align: 'left' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 1', { width: 375, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 2', { width: 550, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 3', { width: 725, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 4', { width: 900, align: 'center' });
+doc.moveDown(); // Move the cursor down to leave space after the header
 
-        // Add each data item to the PDF
-        data.forEach((item, index) => {
-            // Bold the timestamp text and add small spacing
-            doc.font('Helvetica-Bold').text(`Timestamp: ${item.timestamp}`).moveDown(0.5);
-            doc.font('Helvetica').text(`Soil Moisture1: ${item.field3}`);
-            doc.font('Helvetica').text(`Soil Moisture2: ${item.field4}`);
+// Add data rows
+doc.font('Helvetica').fontSize(10);
+filteredData.forEach((data, index) => {
+    // Add data to PDF document, handling undefined values gracefully
+    doc.text(data.timestamp || '', { width: 200, align: 'left' });
+    doc.moveUp(); // Move the cursor up to align with the previous line
+    doc.text(data.field3 ? data.field3.toString() : 'Nan', { width: 375, align: 'center' }); // Map field3 to Sensor 1
+    doc.moveUp(); 
+    doc.text(data.field4 ? data.field4.toString() : 'Nan', {  width: 550, align: 'center'}); // Map field4 to Sensor 2
+    doc.moveUp(); 
+    doc.text(data.field5 ? data.field5.toString() : 'Nan', { width: 725, align: 'center' }); // Map field5 to Sensor 3
+    doc.moveUp(); 
+    doc.text(data.field6 ? data.field6.toString() : 'Nan', {  width: 900, align: 'center'}); // Map field6 to Sensor 4
+    doc.moveDown();
 
-            // Draw a border after each timestamp and its data
-            doc.moveTo(leftMargin, doc.y + 5).lineTo(rightMargin, doc.y + 5).stroke();
+    const lineLength = 490; // Adjust the length of the line as needed
+    const startY = doc.y - 10; // Move up slightly to draw the line above the text
+    const endY = startY + 1; // Set the end Y coordinate of the line
+    doc.moveTo(65, startY).lineTo(65 + lineLength, startY).stroke(); // Adjust the starting and ending X coordinates based on your table width
+    
+});
 
-            // Move down for the next timestamp
-            if (index < data.length - 1) {
-                doc.moveDown();
-            }
-        });
 
-        // Finalize the PDF
-        doc.end();
+
+// Finalize the PDF
+doc.end();
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////
 //for ip address
 const getLocalIpAddress = () => {
@@ -416,15 +448,13 @@ const getLocalIpAddress = () => {
 //////////////////////////////////journal/////////////////////////////////////////////////////
 app.post('/journal', async (req, res) => {
     try {
-      const { input1, input2, seconds } = req.body;
-  
-      const startDate = new Date();
+      const { input1, input2 } = req.body;
+
   
       // Convert the entered date to a localized string
-      const enteredDateStr = startDate.toLocaleString();
   
       // Log the entered date, pre-selected cooldown, and the two inputs
-      console.log('Entered Date:', enteredDateStr);
+
       console.log('Input 1:', input1);
       console.log('Input 2:', input2);
   
@@ -432,12 +462,10 @@ app.post('/journal', async (req, res) => {
       const journalEntry = new journal_mongodb({
         input1,
         input2,
-
-        enteredDateStr, // Save as Date object
       });
       await journalEntry.save();
   
-      renderTemplate(res, 'partials/journal');
+      res.status(200).send('Journal entry saved successfully');
     } catch (error) {
       console.error('Error handling countdown form submission:', error);
       res.status(500).send('Internal Server Error');
@@ -454,8 +482,11 @@ app.post('/countdown', async (req, res) => {
     try {
         const { expectedDate } = req.body;
 
-        // Convert the inputted date to a localized string
-        const formattedExpectedDate = new Date(expectedDate).toLocaleString();
+        // Log the received date
+        console.log('Received Date:', expectedDate);
+
+        // Convert the inputted date to a JavaScript Date object
+        const formattedExpectedDate = new Date(expectedDate);
 
         // Log the formatted date
         console.log('Inputted Date:', formattedExpectedDate);
@@ -463,12 +494,14 @@ app.post('/countdown', async (req, res) => {
         // Update or insert the countdown data into MongoDB
         await countdown_mongodb.updateOne({}, { expectedDate: formattedExpectedDate }, { upsert: true });
 
-        res.send('Countdown updated successfully');
+        // Send the updated date back to the client
+        res.json({ expectedDate: formattedExpectedDate });
     } catch (error) {
         console.error('Error updating countdown:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 app.get('/countdown', async (req, res) => {
@@ -479,7 +512,7 @@ app.get('/countdown', async (req, res) => {
         const lastExpectedDate = countdown ? countdown.expectedDate : null;
 
         // Log the fetched data to the terminal
-        console.log('Fetched Countdown Data:', countdown);
+        //console.log('Fetched Countdown Data:', countdown);
 
         // Render the countdown page with the last expected date
         renderTemplate(res, 'partials/countdown', { lastExpectedDate });
@@ -497,7 +530,7 @@ app.get('/countdown', async (req, res) => {
 /////////////////////////////////////////////////////////////////////////////////////////
 // Additional routes
 
-const additionalRoutes = ['/about_us','/settings','/countdown','/countdown_display','/monitor_drip', '/graph_monitor_drip','/monitor_sprinkler' ,'/graph_monitor_sprinkler','/graph_drip_full','/home', '/login','/drip_selectdate','/sprinkler_selectdate','/download','/journal'];
+const additionalRoutes = ['/about_us','/update-date','/settings','/countdown','/countdown_display','/monitor_drip', '/graph_monitor_drip','/monitor_sprinkler' ,'/graph_monitor_sprinkler','/graph_drip_full','/home', '/login','/drip_selectdate','/sprinkler_selectdate','/download','/journal'];
 additionalRoutes.forEach(route => {
     // Render additional pages based on the route
     app.get(route, (req, res) => renderTemplate(res, `partials/${route.substring(1)}`));
