@@ -1,0 +1,369 @@
+/*-------------------control--------------------------------*/
+.monitor_body .control_container{
+    width:100%;
+    background: #ffffff1c;
+    backdrop-filter: blur(10px);
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.control_header{
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+.control_container .drip_control{
+    display: flex;
+    color: #fff;
+    
+}
+.control_container .control_status{
+    color: #fff;
+    margin-left:50px;
+    
+}
+
+.switch-container {
+    align-items: center;
+
+
+    width: 300px;
+    border-left: 3px solid #d4d4d4;
+    border-right: 3px solid #d4d4d4;
+
+
+}
+.switch-container p{
+   margin-right: 30px;
+   color: rgb(255, 255, 255);
+   
+}
+/*.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #000000;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+*/
+
+.solenoid_switch {
+    width: 60px;
+    margin-top: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 33px; /* Adjust the height as needed */
+    background: #ffffff;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-in-out, background 0.2s ease-in-out;
+    border-radius: 15px;
+  }
+
+  .solenoid_switch:hover {
+    opacity: 1;
+  }
+  .solenoid_switch:disabled {
+   
+    background: #d0d0d0; /* Adjust the background color for the disabled state */
+  }
+  .solenoid_switch::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .solenoid_switch:hover::-webkit-slider-thumb {
+    background: #45a049;
+  }
+  .solenoid_switch:disabled::-webkit-slider-thumb {
+    background: #777777; /* Adjust the background color for the disabled thumb */
+  }
+  
+
+  .solenoid_switch::-moz-range-thumb {
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    background: #4CAF50;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .solenoid_switch:hover::-moz-range-thumb {
+    background: #45a049;
+  }
+
+
+.solenoid_switch{
+
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.switch_label,.graph_label{  
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #1deb99;
+}
+.switch_label{
+    text-align: center;
+}
+
+.switch_content{
+    margin: auto;
+
+    width: fit-content;
+}
+
+
+/*containers-------------------------------------*/
+.monitor_body{
+    font-family: "Arial Narrow", sans-serif;
+    min-height: 100vh;
+    background:url('../images/bg4');
+    background-size: cover;
+    height:100%;
+    width: 100%;
+    background-attachment: fixed;
+    overflow-y: auto;
+    padding-top: 60px;
+}
+
+
+.monitor_maincontainer {
+    width: 70%;  
+    min-height: 100vh;
+    float: right;
+    background: rgba(0, 0, 0, 0.783);
+    backdrop-filter: blur(10px);
+    overflow-y: auto; 
+    padding-left: 20px;
+    padding-right: 20px;
+
+
+}
+
+/*-------------------left container--------------------------------*/
+.left_header_container{
+    width: 30%;
+    min-height: 100vh;
+    position: fixed;
+
+}
+.left_header{
+    margin-top: 60px;
+}
+
+.left_header_container p{
+    color: #ffffff;
+}
+.left_header_container ul{
+    color: #1deb99;
+}
+.left_header_container p, .left_header_container ul{
+    font-size: 70px;
+    font-weight: 600;
+}
+.left_header_container .harvestday_text{
+    font-size: 30px;
+    text-align: center;
+    color: #ffffff;
+   
+}
+
+.left_header_container .header_buttons{
+    padding-top: 50px;
+    margin: auto;
+    width: fit-content;
+   
+}
+.left_header_container .header_buttons button{
+border: none;
+   padding:20px 40px 20px 40px;
+   color: #fff;
+   margin-left: 15px;
+   margin-right: 15px;
+   background-color: #525252;
+   font-size: 12px;
+}
+.left_header_container .header_buttons button:hover{
+    background:#1deb99;
+    color: #000000;
+   
+}
+
+/*-------------------monitor container--------------------------------*/
+.monitor_header{
+
+    font-size: 30px;
+  font-weight: 600;
+    padding:20px 0 20px 0;
+
+    color: #1deb99;
+}
+
+.sensor_data input {
+    padding: 8px; /* Add padding to the inputs */
+    margin-bottom: 8px; /* Add margin between inputs */
+}
+.display_values_container{
+    width: 100%;
+}
+.display_values_container .monitor_sensor:nth-child(odd) {
+    background-color: #fefefe13; /* Add your desired background color for odd elements */
+}
+
+.display_values_container .monitor_sensor:nth-child(even) {
+    background-color: transparent; /* Add your desired background color for even elements or leave transparent */
+}
+.monitor_sensor {
+    margin: auto;
+    background: #ffffff00;
+
+ 
+    margin-bottom: 30px;
+    padding: 20px;
+
+}
+.display_values{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+   
+}
+
+.monitor_mainlabel{
+    color: #000000;
+    margin-bottom: 40px;
+   font-size: 15px;
+   background-color: #ffffff;
+   width:330px;
+    font-weight: 800;
+    padding: 5px 5px;
+
+
+   
+}
+
+.sensor_data1,.sensor_data2,.sensor_data3,.sensor_data4,.sensor_data5,.sensor_data6,.sensor_date{
+   margin-bottom: 10px;
+    color: #ffffff;
+    align-items: center;
+    overflow: hidden; 
+    justify-content: space-between;
+
+    margin-left: 30px;
+
+    padding: 10px;
+    background:#64626240 ;
+
+    
+}
+.monitor_sensor .display_values .sensor_data1{
+    border-left: 10px solid #5a57ff;
+    
+}
+.monitor_sensor .display_values .sensor_data2{
+    border-left: 10px solid #e94949;
+    
+}
+.monitor_sensor .display_values .sensor_data3{
+    border-left: 10px solid #5df06e;
+
+}
+.monitor_sensor .display_values .sensor_data4{
+    border-left: 10px solid #c6da2e;
+}
+.monitor_sensor .display_values .sensor_data5{
+    border-left: 10px solid #da2e8a;
+}
+
+.monitor_sensor .display_values .sensor_data6{
+    border-left: 10px solid #2ed7da;
+}
+.monitor_sensor span {
+   color: rgb(255, 255, 255);
+    text-align: right;
+    float: right;
+   font-size: 45px;
+   font-weight: 600;
+   margin-right: 20px;
+}
+
+.fullscreen_btn{
+    width: fit-content;
+ 
+   float: right;
+}
+.fullscreen_btn button{
+    width:30px ;
+    height: 30px;
+    font-size: 15px;
+    background: transparent;
+    border: solid 1px #343434;
+    color:#ffffff;
+}
+.fullscreen_btn button:hover{
+    font-size: 20px;
+
+    background: #515151;
+
+}
+
+.selected_date_display{
+    color: white;
+}
+.selectdate_label{
+    color: #fff;
+}
