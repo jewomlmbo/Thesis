@@ -1,30 +1,4 @@
 let countdownInterval; // Variable to store the interval
-
-// Function to calculate and update the countdown
-function updateCountdownDate() {
-  // Get the new date from the input field
-  const newDateInput = document.getElementById('newDate');
-  const newDateValue = newDateInput.value;
-
-  // Send a POST request to update the countdown date
-  fetch('/countdown', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      expectedDate: newDateValue,
-    }),
-  })
-    .then(response => response.text())
-    .then(message => {
-      console.log(message);
-      // After updating, refresh the page
-      location.reload();
-    })
-    .catch(error => console.error('Error updating countdown:', error));
-}
-
 // Function to update the countdown display
 function updateCountdown() {
   // Calculate the remaining time in milliseconds
