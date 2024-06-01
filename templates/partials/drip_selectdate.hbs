@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/monitor.css">
+    <link rel="stylesheet" href="/css/drip_nav.css">
+        <link rel="stylesheet" href="/css/monitor_mobile.css">
+        <link rel="stylesheet" href="/css/display_download.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"  crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+           <script src="/src/graph.js"></script>
+
+<body class="monitor_body">
+          {{>nav_drip}}
+    <div class="monitor_maincontainer">
+            <header class="monitor_header">Drip Display and Download</header>
+            <div class="display_selecteddate_container">
+
+
+                <div class="date_download_buttons">
+                 <form action="/select_date_drip" method="POST" id="searchForm">
+    <label class="selectdate_label">Select Start Date:</label>
+    <input class="input_date" type="date" id="startDate" name="startDate">
+    <label class="selectdate_label">Select End Date:</label>
+    <input class="input_date" type="date" id="endDate" name="endDate">
+    <button class="download_button" type="submit"><i class="fas fa-search"></i> Show Data</button>
+</form>
+
+<form action="/download_drip" method="post" id="downloadForm">
+    <input type="date" id="downloadStartDate" name="startDate" value="">
+    <input type="date" id="downloadEndDate" name="endDate" value="">
+    <button class="download_button" type="submit"><i class="fas fa-download"></i> Download PDF</button>
+</form>
+
+
+                </div>
+                <div class="download_instruction">Note: Before pressing download, make sure to select the date first!</div>
+                <div class="selected_date_display_values" id="displayData">
+                <!-- Display the fetched data here -->
+                {{#if selectedData}}
+                {{#if selectedData.length}}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Soil Moisture 1</th>
+                            <th>Soil Moisture 2</th>
+                            <th>Soil Moisture 3</th>
+                            <th>Soil Moisture 4</th>
+                            <!-- Add more fields as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each selectedData}}
+                        <tr>
+                            <td>{{this.timestamp}}</td>
+                            <td>{{this.field3}}</td>
+                            <td>{{this.field4}}</td>
+                            <td>{{this.field5}}</td>
+                            <td>{{this.field6}}</td>
+                            <!-- Add more fields as needed -->
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                {{else}}
+                <p>No data available for the selected date range.</p>
+                {{/if}}
+                {{else}}
+                {{#unless selectedDate}}
+                <p>Please select a date range.</p>
+                {{/unless}}
+                {{/if}}
+            </div>
+            </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const downloadForm = document.getElementById('downloadForm');
+
+    // Event listener for search form submission
+    searchForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get the selected start and end dates
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        // Set the values of the hidden inputs in the download form
+        document.getElementById('downloadStartDate').value = startDate;
+        document.getElementById('downloadEndDate').value = endDate;
+
+        // Submit the search form
+        searchForm.submit();
+    });
+
+    // Event listener for download form submission
+    downloadForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Submit the download form
+        downloadForm.submit();
+    });
+});
+
+</script>
+
+
+    </div>
+        
+
+
+</body>
+
+</html>
