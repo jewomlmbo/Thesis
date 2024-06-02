@@ -1,0 +1,316 @@
+.countdown_journal_container{
+    font-family: 'Poppins', sans-serif;
+    margin-top: 60px;
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+}
+.countdown_container{
+    background-color: rgb(255, 255, 255);
+    background: url('../images/bg6.jpg');
+    background-size: cover;
+    width: 98%;
+    margin: auto;
+    height: 45%;
+}
+.bg_filter{
+    background-color: rgba(0, 113, 21, 0.643);
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+.countdown_container h1{
+    margin: auto;
+
+    width: fit-content;
+    background-color: rgba(250, 235, 215, 0);
+    padding-top: 20px;
+    color: rgb(255, 255, 255);
+}
+#countdown{
+    font-size: 80px;
+    background-color: rgba(255, 255, 255, 0.806);
+    width: fit-content;
+    margin: auto;
+    font-weight: 600;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    color: rgb(0, 0, 0);
+}
+.status-container {
+    display: flex;
+    align-items: center;
+  }
+  .status-container div {
+    margin-left: 8px; /* Adjust this value as needed */
+  }
+  .status-container{
+    background-color: rgba(0, 255, 255, 0);
+    width: fit-content;
+    margin: auto;
+    margin-top: 5px;
+  }
+  .status-container span{
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+  }
+  .status-container #status{
+    font-size: 55px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+  }
+  .countdown_container p{
+    background-color: rgba(14, 29, 24, 0);
+    width: fit-content;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    margin: auto;
+  }
+  .button_container{
+  
+    background-color: rgba(0, 255, 255, 0);
+    width: fit-content;
+    margin: auto;
+    margin-top: 5px;
+  }
+  .button_container .countdown_button{
+    width: 200px;
+    height: 60px;
+
+    border: none;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    font-size: 15px ;
+    border-radius: 10px;
+  }
+  .button_container .countdown_button:hover{
+    background-color: rgb(231, 231, 231);
+    color: rgb(0, 0, 0);
+  }
+
+
+/***********************************************/
+.journal_container{
+    background-color: rgb(245, 245, 245);
+    border: 5px solid rgb(20, 148, 0);
+    width: 98%;
+    margin: auto;
+    margin-top: 5px;
+    height: 50%
+}
+.journal_container h1{
+   
+    margin: auto;
+    margin-top: 15px;
+    width: fit-content;
+}
+.journal_container #journalForm{
+    background-color: rgba(0, 255, 255, 0);
+    width: fit-content;
+    margin: auto;
+}
+.journal_input{
+    width: 800px;
+    border: none;
+    background-color: rgba(240, 248, 255, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
+    height: 50px;
+    font-size: 20px;
+    padding: 5px;
+}
+.inputs_container{
+    margin: auto;
+    margin-top: 30px;
+}
+
+#journalForm label{
+    font-size: 18px;
+    font-weight: 600;
+}
+#journalForm button{
+
+    width: 200px;
+    height: 60px;
+
+    border: none;
+    background-color: rgb(9, 139, 0);
+    color: black;
+    font-size: 15px ;
+    border-radius: 10px;
+
+}
+
+#journalForm button:hover{
+    background-color: rgb(231, 231, 231);
+    color: rgb(0, 0, 0);
+}
+.journal_button_container{
+
+    background-color: rgba(0, 255, 255, 0);
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .countdown_journal_container{
+        font-family: 'Poppins', sans-serif;
+        margin-top: 100px;
+        background-color: rgb(255, 255, 255);
+        height: 80vh;
+    }
+    .countdown_container{
+        background-color: rgb(255, 255, 255);
+        background: url('../images/bg6.jpg');
+        background-size: cover;
+        width: 98%;
+        margin: auto;
+        height: 45;
+    }
+    .bg_filter{
+        background-color: rgba(0, 113, 21, 0.643);
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+    }
+    .countdown_container h1{
+        margin: auto;
+        
+        width: fit-content;
+        background-color: rgba(250, 235, 215, 0);
+        padding-top: 20px;
+        color: rgb(255, 255, 255);
+        font-size: 20px;
+    }
+    #countdown{
+        font-size: 45px;
+        background-color: rgba(255, 255, 255, 0.806);
+        width: fit-content;
+        margin: auto;
+        font-weight: 600;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 6px;
+        color: rgb(0, 0, 0);
+    }
+    .status-container {
+        display: flex;
+        align-items: center;
+      }
+      .status-container div {
+        margin-left: 8px; /* Adjust this value as needed */
+      }
+      .status-container{
+        background-color: rgba(0, 255, 255, 0);
+        width: fit-content;
+        margin: auto;
+        margin-top: 5px;
+      }
+      .status-container span{
+        font-size: 20px;
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+      }
+      .status-container #status{
+        font-size: 30px;
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+      }
+      .countdown_container p{
+        background-color: rgba(14, 29, 24, 0);
+        width: fit-content;
+        font-size: 10px;
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+        margin: auto;
+      }
+      .button_container{
+      
+        background-color: rgba(0, 255, 255, 0);
+        width: fit-content;
+        margin: auto;
+        margin-top: 10px;
+      }
+      .button_container .countdown_button{
+        width: 100px;
+        height: 40px;
+    
+        border: none;
+        background-color: rgb(255, 255, 255);
+        color: black;
+        font-size: 10px ;
+        border-radius: 10px;
+      }
+      .button_container .countdown_button:hover{
+        background-color: rgb(231, 231, 231);
+        color: rgb(0, 0, 0);
+      }
+    
+    
+    /***********************************************/
+    .journal_container{
+        background-color: rgb(245, 245, 245);
+        border: 5px solid rgb(20, 148, 0);
+        width: 98%;
+        margin: auto;
+        margin-top: 5px;
+        height: 55%
+    }
+    .journal_container h1{
+       
+        margin: auto;
+        margin-top: 15px;
+        width: fit-content;
+    }
+    .journal_container #journalForm{
+        background-color: rgba(0, 255, 255, 0);
+        width: fit-content;
+        margin: auto;
+    }
+    .journal_input{
+        width: 95%;
+        border: none;
+        background-color: rgba(240, 248, 255, 0);
+        border-bottom: 2px solid rgb(0, 0, 0);
+        height: 50px;
+        font-size: 20px;
+        padding: 5px;
+    }
+    .inputs_container{
+        margin: auto;
+        margin-top: 30px;
+    }
+    
+    #journalForm label{
+        font-size: 18px;
+        font-weight: 600;
+    }
+    #journalForm button{
+    
+        width: 200px;
+        height: 60px;
+    
+        border: none;
+        background-color: rgb(9, 139, 0);
+        color: black;
+        font-size: 15px ;
+        border-radius: 10px;
+    
+    }
+    
+    #journalForm button:hover{
+        background-color: rgb(231, 231, 231);
+        color: rgb(0, 0, 0);
+    }
+    .journal_button_container{
+    
+        background-color: rgba(0, 255, 255, 0);
+        width: fit-content;
+        margin: auto;
+        margin-top: 20px;
+    }
+    
+
+}
