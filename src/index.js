@@ -213,16 +213,20 @@ app.post('/download_drip', async (req, res) => {
 
         // Add table header
        // Add table header
-doc.fontSize(12).font('Helvetica-Bold');
+doc.fontSize(11).font('Helvetica-Bold');
 doc.text('Timestamp', { width: 200, align: 'left' });
 doc.moveUp(); // Move the cursor up to align with the previous line
-doc.text('Sensor 1', { width: 375, align: 'center' });
+doc.text('temperature', { width: 300, align: 'center' });
 doc.moveUp(); // Move the cursor up to align with the previous line
-doc.text('Sensor 2', { width: 550, align: 'center' });
+doc.text('humidity', { width: 425, align: 'center' });
 doc.moveUp(); // Move the cursor up to align with the previous line
-doc.text('Sensor 3', { width: 725, align: 'center' });
+doc.text('Sensor 1', { width: 550, align: 'center' });
 doc.moveUp(); // Move the cursor up to align with the previous line
-doc.text('Sensor 4', { width: 900, align: 'center' });
+doc.text('Sensor 2', { width: 675, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 3', { width: 800, align: 'center' });
+doc.moveUp(); // Move the cursor up to align with the previous line
+doc.text('Sensor 4', { width: 925, align: 'center' });
 doc.moveDown(); // Move the cursor down to leave space after the header
 
 // Add data rows
@@ -231,13 +235,17 @@ filteredData.forEach((data, index) => {
     // Add data to PDF document, handling undefined values gracefully
     doc.text(data.timestamp || '', { width: 200, align: 'left' });
     doc.moveUp(); // Move the cursor up to align with the previous line
-    doc.text(data.field3 ? data.field3.toString() : 'Nan', { width: 375, align: 'center' }); // Map field3 to Sensor 1
+    doc.text(data.field1 ? data.field1.toString() : 'Nan', { width: 300, align: 'center' }); // Map field3 to Sensor 1
+    doc.moveUp(); // Move the cursor up to align with the previous line
+    doc.text(data.field2 ? data.field2.toString() : 'Nan', { width: 425, align: 'center' }); // Map field3 to Sensor 1
+    doc.moveUp(); // Move the cursor up to align with the previous line
+    doc.text(data.field3 ? data.field3.toString() : 'Nan', { width: 550, align: 'center' }); // Map field3 to Sensor 1
     doc.moveUp(); 
-    doc.text(data.field4 ? data.field4.toString() : 'Nan', {  width: 550, align: 'center'}); // Map field4 to Sensor 2
+    doc.text(data.field4 ? data.field4.toString() : 'Nan', {  width: 675, align: 'center'}); // Map field4 to Sensor 2
     doc.moveUp(); 
-    doc.text(data.field5 ? data.field5.toString() : 'Nan', { width: 725, align: 'center' }); // Map field5 to Sensor 3
+    doc.text(data.field5 ? data.field5.toString() : 'Nan', { width: 800, align: 'center' }); // Map field5 to Sensor 3
     doc.moveUp(); 
-    doc.text(data.field6 ? data.field6.toString() : 'Nan', {  width: 900, align: 'center'}); // Map field6 to Sensor 4
+    doc.text(data.field6 ? data.field6.toString() : 'Nan', {  width: 925, align: 'center'}); // Map field6 to Sensor 4
     doc.moveDown();
 
     const lineLength = 490; // Adjust the length of the line as needed
@@ -256,14 +264,6 @@ doc.end();
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
-
-
-
 
 
 
