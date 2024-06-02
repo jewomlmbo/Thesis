@@ -23,11 +23,11 @@
 
     width: fit-content;
     background-color: rgba(250, 235, 215, 0);
-    padding-top: 20px;
+    padding-top: 10px;
     color: rgb(255, 255, 255);
 }
 #countdown{
-    font-size: 80px;
+    font-size: 70px;
     background-color: rgba(255, 255, 255, 0.806);
     width: fit-content;
     margin: auto;
@@ -51,19 +51,19 @@
     margin-top: 5px;
   }
   .status-container span{
-    font-size: 30px;
+    font-size: 25px;
     color: rgb(255, 255, 255);
     font-weight: 600;
   }
   .status-container #status{
-    font-size: 55px;
+    font-size: 40px;
     color: rgb(255, 255, 255);
     font-weight: 600;
   }
   .countdown_container p{
     background-color: rgba(14, 29, 24, 0);
     width: fit-content;
-    font-size: 20px;
+    font-size: 17px;
     color: rgb(255, 255, 255);
     font-weight: 600;
     margin: auto;
@@ -76,13 +76,13 @@
     margin-top: 5px;
   }
   .button_container .countdown_button{
-    width: 200px;
-    height: 60px;
+    width: 150px;
+    height: 45px;
 
     border: none;
     background-color: rgb(255, 255, 255);
     color: black;
-    font-size: 15px ;
+    font-size: 12px ;
     border-radius: 10px;
   }
   .button_container .countdown_button:hover{
