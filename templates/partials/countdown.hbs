@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="/css/countdown_journal.css">
+  <script src="/src/countdown.js"></script>
+</head>
+<body>
+  <div class="countdown_journal_container">
+    <div class="countdown_container">
+      <div class="bg_filter">
+        <h1>Time Before Harvest</h1>
+        <div id="countdown">Calculating...</div>
+        <div class="status-container">
+            <span>status:</span>
+            <div id="status"></div>
+        </div>
+        <p>Expected Harvest Date: <span>{{ lastExpectedDate }}</span></p>
+        <div class="button_container">
+          <button class="countdown_button" onclick="setCountdownTo100Days(); refreshPage();">Start 100 Days Countdown</button>
+        <!-- <button class="countdown_button" onclick="setCountdownTo30Days(); refreshPage();">30 Days</button>
+          <button class="countdown_button" onclick="setCountdownTo60Days(); refreshPage();">60 Days</button>
+          <button class="countdown_button" onclick="setCountdownTo90Days(); refreshPage();">90 Days</button>
+          <button class="countdown_button" onclick="setCountdownTo15Days(); refreshPage();">15 Days</button>--> <!-- Added button for 15 days -->
+        </div>
+      </div>
+    </div>
+
+    <div class="journal_container">
+      <h1>Journal</h1>
+      <form id="journalForm" action="/journal" method="post">
+        <div class="inputs_container">
+            <label for="input1">Journal 1:</label>
+            <input class="journal_input" type="text" id="input1" placeholder="Enter text" name="input1">
+        </div>
+        <div class="inputs_container">
+            <label for="input2">Journal 2:</label>
+            <input class="journal_input" type="text" id="input2" placeholder="Enter text" name="input2">
+        </div>
+        <div class="journal_button_container">
+          <button type="submit" id="journalsavebutton">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
+  <script>
+    async function setCountdownTo100Days() {
+      await setCountdownAndRefresh(100);
+    }
+
+    async function setCountdownTo30Days() {
+      await setCountdownAndRefresh(30);
+    }
+
+    async function setCountdownTo60Days() {
+      await setCountdownAndRefresh(60);
+    }
+
+    async function setCountdownTo90Days() {
+      await setCountdownAndRefresh(90);
+    }
+
+    async function setCountdownTo15Days() {
+      await setCountdownAndRefresh(15);
+    }
+
+    async function setCountdownAndRefresh(days) {
+      const response = await fetch('/countdown', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ expectedDate: new Date(Date.now() + days * 24 * 60 * 60 * 1000) })
+      });
+      const data = await response.json();
+      console.log('Server Response:', data);
+      displayStatus(data.remainingDays);
+    }
+
+    // Function to refresh the page
+    function refreshPage() {
+      location.reload();
+    }
+
+    // Define lastExpectedDate globally
+    let lastExpectedDate = new Date("{{ lastExpectedDate }}");
+
+    // Initial update
+    updateCountdown();
+    displayStatus(); // Add this line to call the displayStatus function after updating the countdown
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const journalForm = document.getElementById('journalForm');
+
+      journalForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        try {
+          const formData = new FormData(journalForm);
+
+          const response = await fetch('/journal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData.entries()))
+          });
+
+          if (response.ok) {
+            console.log('Journal entry saved successfully');
+            // You can add any additional logic here, such as displaying a success message to the user
+          } else {
+            console.error('Error saving journal entry:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error saving journal entry:', error.message);
+        }
+      });
+
+      // Update status every second
+      setInterval(async () => {
+        try {
+          const response = await fetch('/countdown');
+          const data = await response.json();
+          console.log('Countdown Response:', data);
+          displayStatus(data.remainingDays);
+        } catch (error) {
+          console.error('Error updating status:', error.message);
+        }
+      }, 1000);
+    });
+
+    // Function to display status based on remaining days
+    function displayStatus() {
+      const remainingDays = getRemainingDays();
+
+      let status;
+
+      if (remainingDays >= 0 && remainingDays <= 15) {
+        status = "Maturity";
+      } else if (remainingDays > 15 && remainingDays <= 49) {
+        status = "Pod Formation";
+      } else if (remainingDays > 49 && remainingDays <= 74) {
+        status = "Pegging/Flowering";
+      } else if (remainingDays > 74 && remainingDays <= 99) {
+        status = "Emergence";
+      } else {
+        status = "Planting";
+      }
+
+      document.getElementById('status').textContent = status;
+    }
+
+    function getRemainingDays() {
+      const currentDate = new Date();
+      const lastExpectedDate = new Date("{{ lastExpectedDate }}");
+      const timeDifference = lastExpectedDate.getTime() - currentDate.getTime();
+      const remainingDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      return remainingDays;
+    }
+  </script>
+</body>
+</html>
