@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/monitor.css">
+    <link rel="stylesheet" href="/css/monitor_mobile.css">
+    <link rel="stylesheet" href="/css/drip_nav.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"  crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Include your index.js file -->
+<script src="/src/index.js"></script>
+  
+           <script src="/src/graph_dripdata.js"></script>
+ <script src="/src/fetch_dripdata.js"></script>
+ <script src="/src/switch_drip.js"></script>
+
+
+
+<body class="monitor_body">
+          {{>nav_drip}}
+
+
+
+    <div class="monitor_maincontainer">
+
+            <div class="control_container">
+                 <header class="monitor_header">Drip Control and monitoring</header>
+                <div class="drip_control">
+                    <div class="switch-container">
+                        <div class="switch_content">                       
+                            <div class="switch_label">Master Control</div>
+                            <label >automated</label>
+                            <input type="range" class="solenoid_switch" id="slider2" min="0" max="1" step="1" value="0" onchange="updateThingSpeak6()">
+                            <label for="">Manual</label>
+                            <div id="sliderValue2"></div>
+                        </div>
+                    </div>
+
+                     <div class="switch-container">                       
+                        <div class="switch_content">      
+                            <div class="switch_label">Solenoid Control</div>
+                            <label for="">off</label>
+                            <input type="range" class="solenoid_switch"id="slider1" min="0" max="1" step="1" value="0" onchange="updateThingSpeak5()">
+                            <label for="">on</label>
+                            <div id="sliderValue1"></div>
+                         </div>
+                        <div class="control_status">
+                            <ul>Valve is: <span id="drip_solenoidstatus"></span></ul>
+                            <ul >as of: <span id="drip_solenoidtimestamp"></span></ul>
+                        </div>
+
+                    </div>
+
+                  
+                </div>
+            </div>
+
+            <div class="display_values_main">
+                <div class="display_values_container1">
+                    <div class="monitor_sensor">
+                        <header class="monitor_mainlabel">Sensor readings as of:
+                        <div class="sensor_date"><div id="drip_timestamp1"></div></div>   </header> 
+                        <div class="display_values1">
+                            <div class="sensor_data1"> <i class="fas fa-sun"></i> Temperature(C) <div class="data_symbol">°C</div><span id="air_temperature"></span></div>
+                            <div class="sensor_data2"> <i class="fas fa-tint"></i> Humidity <div class="data_symbol">RH</div><span id="air_humidity">RH</span></div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="display_values_container2">
+                    <div class="monitor_sensor">
+                        <header class="monitor_mainlabel">Sensor readings as of:
+                        <div class="sensor_date"><div id="drip_timestamp2"></div></div>   </header> 
+                        <div class="display_values2">
+                            <div class="sensor_data3"> <i class="fas fa-bolt"></i> Soil Sensor 1 <span id="drip_soilmoisture1"></span><div id="low_warning1"class="low_warning">low moisture</div></div>
+                            <div class="sensor_data4"> <i class="fas fa-bolt"></i> Soil Sensor 2 <span id="drip_soilmoisture2"></span><div id="low_warning2" class="low_warning">low moisture</div></div>
+                            <div class="sensor_data5"> <i class="fas fa-bolt"></i> Soil Sensor 3 <span id="drip_soilmoisture3"></span><div id="low_warning3" class="low_warning">low moisture</div></div>
+                            <div class="sensor_data6"> <i class="fas fa-bolt"></i> Soil Sensor 4 <span id="drip_soilmoisture4"></span><div id="low_warning4" class="low_warning">low moisture</div></div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="monitor_sensor">
+                    <div class="graph_container">
+                        
+                    
+                        <div class="graph1">
+                           
+                            <canvas id="air_graph" ></canvas>
+                        </div>
+                       
+                       <div class="graph2">
+                           
+                            <canvas id="soil_moisture_graph" ></canvas>
+                        </div>
+                    </div>
+
+                    
+                    
+                </div>
+
+                
+
+                
+               
+           
+
+           
+        </div>
+        
+
+
+</body>
+<!--<script>
+    function updateSoilMoistureClasses() {
+        var soilMoisture1 = parseInt(document.getElementById("drip_soilmoisture1").innerText);
+        var soilMoisture2 = parseInt(document.getElementById("drip_soilmoisture2").innerText);
+        var soilMoisture3 = parseInt(document.getElementById("drip_soilmoisture3").innerText);
+        var soilMoisture4 = parseInt(document.getElementById("drip_soilmoisture4").innerText);
+        // Repeat for other soil moisture sensors
+
+        // Update classes based on current values
+        if (soilMoisture1 <= 50) {
+            document.getElementById("drip_soilmoisture1").classList.add("dry_moisture");
+            document.getElementById("drip_soilmoisture1").classList.remove("wet_moisture");
+            document.getElementById("drip_soilmoisture1").classList.remove("black");
+        } else if (soilMoisture1 < 50){
+            document.getElementById("drip_soilmoisture1").classList.add("wet_moisture");
+            document.getElementById("drip_soilmoisture1").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture1").classList.remove("black");
+        }else{
+             document.getElementById("drip_soilmoisture1").classList.add("black");
+            document.getElementById("drip_soilmoisture1").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture1").classList.remove("wet_moisture");
+        }
+
+         if (soilMoisture2 <= 50) {
+            document.getElementById("drip_soilmoisture2").classList.add("dry_moisture");
+            document.getElementById("drip_soilmoisture2").classList.remove("wet_moisture");
+            document.getElementById("drip_soilmoisture2").classList.remove("black");
+        } else if (soilMoisture2 > 50){
+            document.getElementById("drip_soilmoisture2").classList.add("wet_moisture");
+            document.getElementById("drip_soilmoisture2").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture2").classList.remove("black");
+        }else{
+             document.getElementById("drip_soilmoisture2").classList.add("black");
+            document.getElementById("drip_soilmoisture2").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture2").classList.remove("wet_moisture");
+        }
+
+         if (soilMoisture3 <= 50) {
+            document.getElementById("drip_soilmoisture3").classList.add("dry_moisture");
+            document.getElementById("drip_soilmoisture3").classList.remove("wet_moisture");
+            document.getElementById("drip_soilmoisture3").classList.remove("black");
+        } else if (soilMoisture3 > 50){
+            document.getElementById("drip_soilmoisture3").classList.add("wet_moisture");
+            document.getElementById("drip_soilmoisture3").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture3").classList.remove("black");
+        }else{
+             document.getElementById("drip_soilmoisture3").classList.add("black");
+            document.getElementById("drip_soilmoisture3").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture3").classList.remove("wet_moisture");
+        }
+
+         if (soilMoisture4 <= 50) {
+            document.getElementById("drip_soilmoisture4").classList.add("dry_moisture");
+            document.getElementById("drip_soilmoisture4").classList.remove("wet_moisture");
+            document.getElementById("drip_soilmoisture4").classList.remove("black");
+        } else if (soilMoisture4 > 50){
+            document.getElementById("drip_soilmoisture4").classList.add("wet_moisture");
+            document.getElementById("drip_soilmoisture4").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture4").classList.remove("black");
+        }else{
+             document.getElementById("drip_soilmoisture4").classList.add("black");
+            document.getElementById("drip_soilmoisture4").classList.remove("dry_moisture");
+            document.getElementById("drip_soilmoisture4").classList.remove("wet_moisture");
+        }
+
+
+    }
+
+    // Call the function initially
+    updateSoilMoistureClasses();
+
+    // Update classes every 10 seconds
+    setInterval(updateSoilMoistureClasses, 5000); // 10 seconds interval
+</script>-->
+
+
+ <script>
+        function updateSoilMoistureClasses() {
+            // Loop through each soil moisture sensor
+            for (var i = 1; i <= 4; i++) {
+                var soilMoisture = parseInt(document.getElementById("drip_soilmoisture" + i).innerText);
+                var element = document.getElementById("drip_soilmoisture" + i);
+                var warningElement = document.getElementById("low_warning" + i);
+
+                // Update classes based on current values
+                if (soilMoisture <= 50) {
+                    element.classList.add("dry_moisture");
+                    element.classList.remove("wet_moisture");
+                    element.classList.remove("black");
+                    warningElement.style.display = "block";
+                } else if (soilMoisture > 50) {
+                    element.classList.add("wet_moisture");
+                    element.classList.remove("dry_moisture");
+                    element.classList.remove("black");
+                    warningElement.style.display = "none";
+                } else {
+                    element.classList.add("black");
+                    element.classList.remove("dry_moisture");
+                    element.classList.remove("wet_moisture");
+                    warningElement.style.display = "none";
+                }
+            }
+        }
+
+        function updateDripStatus() {
+            var statusElement = document.getElementById('drip_solenoidstatus');
+            var status = statusElement.textContent.trim();
+
+            if (status === 'On') {
+                statusElement.classList.remove('solenoid_status_off');
+                statusElement.classList.add('solenoid_status_on');
+            } else if (status === 'Off') {
+                statusElement.classList.remove('solenoid_status_on');
+                statusElement.classList.add('solenoid_status_off');
+            }
+        }
+
+        updateSoilMoistureClasses();
+     updateDripStatus();
+
+
+    setInterval(updateSoilMoistureClasses, 1000); // 10 seconds interval
+    setInterval(updateDripStatus, 1000);
+    </script>
+
+
+
+</html>

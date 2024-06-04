@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Entries</title>
+  <link rel="stylesheet" href="/css/countdown_journal.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.delete_button').forEach(button => {
+        button.addEventListener('click', async (event) => {
+          const id = event.target.dataset.id;
+          try {
+            const response = await fetch(`/journal/${id}`, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const result = await response.json();
+            if (result.success) {
+              // Remove the journal entry from the DOM
+              event.target.closest('.journal_entry').remove();
+            } else {
+              console.error('Error deleting journal entry:', result.message);
+            }
+          } catch (error) {
+            console.error('Error deleting journal entry:', error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  {{>nav_main}}
+  
+  <div class="journal_entries">
+    <div class="journal_display_top">
+      <div class="top_content">
+        <a href="/countdown"><button><i class="fas fa-chevron-left"></i> Countdown</button></a>
+        <h1>Journals</h1>
+      </div>
+    </div>
+    <div class="journal_entry_container">
+    {{#each journals}}
+      <div class="journal_entry">
+        <button class="delete_button" data-id="{{_id}}"><i class="fas fa-trash-alt"></i></button>
+        <p><strong>Date: </strong> {{timestamp}}</p>
+        <p><strong>Journal 1:</strong> {{input1}}</p>
+        <p><strong>Journal 2:</strong> {{input2}}</p>
+        
+      </div>
+    {{/each}}
+    </div>
+  </div>
+</body>
+</html>
