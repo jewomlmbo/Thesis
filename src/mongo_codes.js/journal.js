@@ -5,19 +5,21 @@ mongoose.connect("mongodb+srv://jerome:jerome@thesis.ags8rwk.mongodb.net/?retryW
   useUnifiedTopology: true,
 })
   .then(() => {
-    console.log(' journal MongoDB connected');
+    console.log('Journal MongoDB connected');
   })
   .catch((e) => {
-    console.log('journal MongoDB connection failed');
+    console.log('Journal MongoDB connection failed');
   });
 
 const journalSchema = new mongoose.Schema({
   input1: String,
   input2: String,
-
-  enteredDateStr: String, // Change the field name to entryDate
+  timestamp: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-const journal_mongodb = mongoose.model('journal_cooldown', journalSchema);
+const journal_mongodb = mongoose.model('journal', journalSchema);
 
 module.exports = { mongoose, journal_mongodb };
