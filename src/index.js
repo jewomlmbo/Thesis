@@ -266,6 +266,52 @@ doc.end();
 });
 
 
+app.post('/select_value_drip', async (req, res) => {
+    try {
+        const valueInput = parseInt(req.body.valueInput, 10);
+
+        // Log the inputted value
+        console.log('Inputted Value:', valueInput);
+
+        // Connect to MongoDB
+        const client = await MongoClient.connect(mongo_link, { useNewUrlParser: true, useUnifiedTopology: true });
+        const db = client.db("Thesis");
+        const collection = db.collection("drip_sensor_data");
+
+        // Fetch data from MongoDB
+        const data = await collection.find().toArray();
+
+        // Filter data based on the selected value in fields 3, 4, 5, and 6
+        const filteredData = data.filter(item => 
+            parseInt(item.field3) === valueInput ||
+            parseInt(item.field4) === valueInput ||
+            parseInt(item.field5) === valueInput ||
+            parseInt(item.field6) === valueInput
+        );
+
+        // Log the filtered data
+        console.log('Filtered Data:', filteredData);
+
+        // Close MongoDB connection
+        client.close();
+
+        // Render the HTML template with the fetched data
+        res.render('partials/drip_selectdate', { data: filteredData, selectedData: filteredData });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
+
+
+
+
 
 function formatNumber(value) {
     if (typeof value === 'number' && !isNaN(value)) {
@@ -422,6 +468,42 @@ doc.end();
     }
 });
 
+app.post('/select_value_sprinkler', async (req, res) => {
+    try {
+        const valueInput = parseInt(req.body.valueInput, 10);
+
+        // Log the inputted value
+        console.log('Inputted Value:', valueInput);
+
+        // Connect to MongoDB
+        const client = await MongoClient.connect(mongo_link, { useNewUrlParser: true, useUnifiedTopology: true });
+        const db = client.db("Thesis");
+        const collection = db.collection("sprinkler_sensor_data");
+
+        // Fetch data from MongoDB
+        const data = await collection.find().toArray();
+
+        // Filter data based on the selected value in fields 3, 4, 5, and 6
+        const filteredData = data.filter(item => 
+            parseInt(item.field3) === valueInput ||
+            parseInt(item.field4) === valueInput ||
+            parseInt(item.field5) === valueInput ||
+            parseInt(item.field6) === valueInput
+        );
+
+        // Log the filtered data
+        console.log('Filtered Data:', filteredData);
+
+        // Close MongoDB connection
+        client.close();
+
+        // Render the HTML template with the fetched data
+        res.render('partials/sprinkler_selectdate', { data: filteredData, selectedData: filteredData });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -449,28 +531,56 @@ const getLocalIpAddress = () => {
 app.post('/journal', async (req, res) => {
     try {
       const { input1, input2 } = req.body;
-
   
-      // Convert the entered date to a localized string
+      // Get the current time
+      const timestamp = new Date();
   
-      // Log the entered date, pre-selected cooldown, and the two inputs
-
+      // Log the entered data
       console.log('Input 1:', input1);
       console.log('Input 2:', input2);
+      console.log('Timestamp:', timestamp);
   
       // Save the data to MongoDB
       const journalEntry = new journal_mongodb({
         input1,
         input2,
+        timestamp
       });
       await journalEntry.save();
   
       res.status(200).send('Journal entry saved successfully');
     } catch (error) {
-      console.error('Error handling countdown form submission:', error);
+      console.error('Error handling journal form submission:', error);
       res.status(500).send('Internal Server Error');
     }
-});
+  });
+
+  app.get('/journal', async (req, res) => {
+    try {
+      const journals = await journal_mongodb.find().sort({ timestamp: -1 }).lean(); // Use lean()
+      console.log('Retrieved Journal Entries:', journals);
+      console.log('Passing Data to Handlebars:', { journals }); // Log the data structure
+      res.render('partials/journal', { journals });
+    } catch (error) {
+      console.error('Error fetching journal entries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  // Handle delete journal entry
+app.delete('/journal/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      await journal_mongodb.findByIdAndDelete(id);
+      res.status(200).send({ success: true, message: 'Journal entry deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting journal entry:', error);
+      res.status(500).send({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+  
+  
 
 
 
@@ -521,8 +631,6 @@ app.get('/countdown', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 
 
   
